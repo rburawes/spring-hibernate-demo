@@ -10,7 +10,7 @@
           http://www.springframework.org/schema/context/spring-context.xsd
           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:property-placeholder location="classpath*:application-test.properties"/><!-- Tells the application where to look for properties e.g. JDBC driver, url, username, password etc. -->
+    <context:property-placeholder location="classpath*:application.properties"/><!-- Tells the application where to look for properties e.g. JDBC driver, url, username, password etc. -->
     <context:component-scan base-package="com.demo.dao, com.demo.service"/> <!-- Tells the application where to look for classes marked as @Component, @Service, @Controller etc. -->
     <context:annotation-config/> <!-- Enables annotation on registered beans.-->
     <tx:annotation-driven/> <!-- This tells Spring to enable annotation-driven transactions.  Those classes with @Transactional annotation. -->
