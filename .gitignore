@@ -2,3 +2,4 @@ spring-hibernate-demo.iml
 .idea/
 out/
 lib/
+target/
