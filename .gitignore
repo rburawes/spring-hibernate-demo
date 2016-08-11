@@ -1,3 +1,4 @@
-.spring-hibernate-demo.iml
+spring-hibernate-demo.iml
 .idea/
 out/
+lib/
