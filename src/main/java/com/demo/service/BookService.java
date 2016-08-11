@@ -9,8 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Handles the {@link com.demo.model.Book} entity business and
- * transactional logic.
+ * Handles the business logic {@link com.demo.model.Book}.
  *
  * @author rburawes
  */
