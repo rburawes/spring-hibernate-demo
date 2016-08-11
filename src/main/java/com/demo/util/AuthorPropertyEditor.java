@@ -7,9 +7,8 @@ import java.beans.PropertyEditorSupport;
 import java.io.IOException;
 
 /**
- * Converts the string value of {@link Author} to object.
- * Required on{@link com.demo.controller.BookController}
- * to process {@link Author} object input from page.
+ * Converts the string representation of {@link Author} to object.
+ * Required on{@link com.demo.controller.BookController}.
  *
  * @author rburawes
  */
