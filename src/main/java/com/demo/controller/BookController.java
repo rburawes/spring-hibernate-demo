@@ -68,7 +68,6 @@ public class BookController extends AppLogger {
 
         try {
             model.addAttribute("authors", book.getAuthors());
-            model.addAttribute("authors", title);
             book.setTimeCreated(new Date());
             book.setTimeUpdated(new Date());
             bookService.saveBook(book);
