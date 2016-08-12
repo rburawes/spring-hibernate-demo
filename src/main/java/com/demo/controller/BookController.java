@@ -67,15 +67,24 @@ public class BookController extends AppLogger {
         model.addAttribute("title", book.getTitle());
 
         try {
+
             model.addAttribute("authors", book.getAuthors());
             book.setTimeCreated(new Date());
             book.setTimeUpdated(new Date());
             bookService.saveBook(book);
             log.info("Book successfully saved. [{}]", title);
+
         } catch (Exception e) {
             log.error("An error has occurred while persisting book entity. - {}", e.getMessage());
             model.addAttribute("error", e.getMessage());
             return "failed";
+        }
+
+        try {
+            List<Book> books = bookService.getBooks();
+            model.addAttribute("books", books);
+        }catch (Exception e){
+            log.error("An error has occurred while retrieving books. - {}", e.getMessage());
         }
 
         return "success";

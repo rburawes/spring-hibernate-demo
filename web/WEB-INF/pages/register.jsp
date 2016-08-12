@@ -3,32 +3,42 @@
 <html>
 <head>
     <title>Spring Hibernate Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-
-<h2>Sample Registration Form</h2>
-<form:form method="post" modelAttribute="book" action="/bookstore/add">
-    <table>
-        <tr>
-            <td><form:label path="title">Title</form:label></td>
-            <td><form:input path="title"/></td>
-        </tr>
-        <tr>
+<div class="container">
+    <jsp:include page="sections/header.jsp"/>
+    <div>
+        <form:form class="form-horizontal" method="post" modelAttribute="book" action="/bookstore/add" name="book" id="book">
             <c:catch var="exception">
-                <c:forEach var="author" items="${authors}">
-                    <td><form:checkbox path="authors" value="${author}"/> <c:out value="${author.givenName} ${author.familyName}"/></td>
-                </c:forEach>
-            </c:catch>
-            <c:if test="${exception != null}" >
-                <td>Authors cannot be loaded. ${exception.message}</td>
-            </c:if>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Submit"/>
-            </td>
-        </tr>
-    </table>
-</form:form>
+                <div class="form-group">
+                    <form:label path="title">Title</form:label>
+                    <form:input path="title" cssClass="form-control" placeholder="Title"/>
+                </div>
+                <div class="form-group">
+                    <form:label path="authors">Authors</form:label>
+                    <form:select multiple="true" cssClass="form-control" path="authors" title="Select author(s)..."
+                                 id="authors">
+                        <c:forEach var="author" items="${authors}">
+                            <form:option value="${author}">
+                                <c:out value="${author.givenName} ${author.familyName}"/>
+                            </form:option>
+                        </c:forEach>
+                    </form:select>
+                    <c:if test="${exception != null}">
+                        Authors cannot be loaded. ${exception.message}
+                    </c:if>
+                </div>
+            </c:catch><p/>
+            <div class="form-actions">
+                <form:button type="submit" class="btn btn-success">Add</form:button>
+                <form:button type="button" class="btn">Cancel</form:button>
+            </div>
+        </form:form>
+    </div>
+    <jsp:include page="sections/footer.jsp"/>
+</div>
 </body>
 </html>
