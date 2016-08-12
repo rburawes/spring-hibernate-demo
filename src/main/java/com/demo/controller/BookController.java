@@ -2,7 +2,11 @@ package com.demo.controller;
 
 import com.demo.model.Author;
 import com.demo.model.Book;
+import com.demo.service.AuthorService;
+import com.demo.service.BookService;
+import com.demo.util.AppLogger;
 import com.demo.util.AuthorPropertyEditor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,11 +27,16 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/bookstore")
-public class BookController {
+public class BookController extends AppLogger {
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private AuthorService authorService;
 
     /**
      * Registers the {@link AuthorPropertyEditor} to process {@link Author} input.
-     * @param binder
      */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -38,23 +47,14 @@ public class BookController {
     public ModelAndView book() {
 
         ModelAndView mv = new ModelAndView("register", "book", new Book());
+
         List<Author> authors = new ArrayList<>();
 
-        Author author = new Author();
-        author.setId(1);
-        author.setGivenName("Martin");
-        author.setFamilyName("Odersky");
-        author.setTimeCreated(new Date());
-        author.setTimeUpdated(new Date());
-        authors.add(author);
-
-        Author author2 = new Author();
-        author2.setId(2);
-        author2.setGivenName("Lex");
-        author2.setFamilyName("Spoon");
-        author2.setTimeCreated(new Date());
-        author2.setTimeUpdated(new Date());
-        authors.add(author2);
+        try {
+            authors = authorService.getAuthors();
+        } catch (Exception e) {
+            log.error("An error has occurred while retrieving author list. - {}", e.getMessage());
+        }
 
         mv.addObject("authors", authors);
         return mv;
@@ -63,8 +63,21 @@ public class BookController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addBook(@ModelAttribute("book") Book book, Model model) {
 
+        String title = book.getTitle();
         model.addAttribute("title", book.getTitle());
-        model.addAttribute("authors", book.getAuthors());
+
+        try {
+            model.addAttribute("authors", book.getAuthors());
+            model.addAttribute("authors", title);
+            book.setTimeCreated(new Date());
+            book.setTimeUpdated(new Date());
+            bookService.saveBook(book);
+            log.info("Book successfully saved. [{}]", title);
+        } catch (Exception e) {
+            log.error("An error has occurred while persisting book entity. - {}", e.getMessage());
+            model.addAttribute("error", e.getMessage());
+            return "failed";
+        }
 
         return "success";
     }

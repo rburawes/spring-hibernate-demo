@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "author", schema = "store")
 public class Author extends Modifiable {
 
-    @Column(name = "giver_name", nullable = false)
+    @Column(name = "given_name", nullable = false)
     private String givenName;
 
     @Column(name = "family_name", nullable = false)

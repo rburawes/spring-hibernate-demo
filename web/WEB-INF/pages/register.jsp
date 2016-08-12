@@ -14,9 +14,14 @@
             <td><form:input path="title"/></td>
         </tr>
         <tr>
-            <c:forEach var="author" items="${authors}">
-                <td><form:checkbox path="authors" value="${author}"/> <c:out value="${author.givenName} ${author.familyName}"/></td>
-            </c:forEach>
+            <c:catch var="exception">
+                <c:forEach var="author" items="${authors}">
+                    <td><form:checkbox path="authors" value="${author}"/> <c:out value="${author.givenName} ${author.familyName}"/></td>
+                </c:forEach>
+            </c:catch>
+            <c:if test="${exception != null}" >
+                <td>Authors cannot be loaded. ${exception.message}</td>
+            </c:if>
         </tr>
         <tr>
             <td colspan="2">

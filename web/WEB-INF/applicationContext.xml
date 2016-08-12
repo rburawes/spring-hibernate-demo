@@ -2,13 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="
-          http://www.springframework.org/schema/beans
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd
           http://www.springframework.org/schema/context
           http://www.springframework.org/schema/context/spring-context.xsd
-          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <context:property-placeholder location="classpath*:application.properties"/><!-- Tells the application where to look for properties e.g. JDBC driver, url, username, password etc. -->
     <context:component-scan base-package="com.demo.dao, com.demo.service"/> <!-- Tells the application where to look for classes marked as @Component, @Service, @Controller etc. -->
@@ -23,6 +23,7 @@
         <property name="password" value="${jdbc.pass}" />
     </bean>
 
+    <!-- Creates a bean sessionFactory, this will be the one to manage your sessions. -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="com.demo.model" />
@@ -35,6 +36,12 @@
             </props>
         </property>
     </bean>
+
+    <!-- This will populate author records to the database. This is very dangerous in production, be careful with it.-->
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:sql/schema.sql" encoding="UTF-8" separator=";"/>
+        <jdbc:script location="classpath:sql/data.sql" encoding="UTF-8" separator=";"/>
+    </jdbc:initialize-database>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
