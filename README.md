@@ -7,7 +7,7 @@ What's inside:
 * Saving, updating, deleting and listing records using Hibernate's Session and SessionFactory.
 * Submitting form data from JSP page to Spring controller (uses JSTL and Spring Form JSP Tag). 
 
-Requiremens:
+Requirements:
 --------------
 
 * [Maven](https://maven.apache.org/install.html). 
