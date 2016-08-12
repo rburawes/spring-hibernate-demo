@@ -11,27 +11,36 @@
 <div class="container">
     <jsp:include page="sections/header.jsp"/>
     <div>
-        <p class="lead">The book <strong><c:out value="${title}"/></strong> has been successfully added! Here are the new list of available books:</p>
-    </div><p/>
+        <p class="lead">The book <strong><c:out value="${title}"/></strong> has been successfully added! Here are the
+            new list of available books:</p>
+    </div>
+    <p/>
     <div class="row">
         <table class="table">
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Authors</th>
+                    <th>Author(s)</th>
                 </tr>
             </thead>
             <tbody>
-            <c:forEach items="${books}" var="book">
-                <tr>
-                    <td>${book.title}</td>
-                    <td>
-                        <c:forEach items="${book.authors}" var="author" varStatus="status">
-                            <c:out value="${author.givenName} ${author.familyName}${status.last ? '' : ', '}"/>
-                        </c:forEach>
-                    </td>
-                </tr>
-            </c:forEach>
+                <c:catch var="exception">
+                    <c:forEach items="${books}" var="book">
+                        <tr>
+                            <td>${book.title}</td>
+                            <td>
+                                <c:forEach items="${book.authors}" var="author" varStatus="status">
+                                    <c:out value="${author.givenName} ${author.familyName}${status.last ? '' : ', '}"/>
+                                </c:forEach>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    <c:if test="${exception != null}">
+                        <tr>
+                            <td colspan="2">Data cannot be loaded. ${exception.message}</td>
+                        </tr>
+                    </c:if>
+                </c:catch>
             </tbody>
         </table>
     </div>
