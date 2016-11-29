@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Holds the details of book.
+ * Holds the details of book, includes author list.
  *
  * @author rburawes
  */
