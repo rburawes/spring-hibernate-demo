@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 /**
  * Holds the {@link Author} details associated with the {@link Book}.
+ * Contains author basic info.
  *
  * @author rburawes
  */
