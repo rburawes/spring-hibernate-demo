@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Holds the details of book, includes author list.
- *
+ * Intentionally added comment.
  * @author rburawes
  */
 @Entity
