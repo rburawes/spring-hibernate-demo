@@ -27,7 +27,7 @@
         <org.slf4j-version>1.7.21</org.slf4j-version>
         <logback.version>1.1.7</logback.version>
     </properties>
-
+    <!-- Application dependencies. -->
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
