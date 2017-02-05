@@ -147,7 +147,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    <!-- Compiles and builds the application. -->
     <build>
         <pluginManagement>
             <plugins>
